@@ -1,11 +1,10 @@
-
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wellbeing Idea Generator</title>
 
-<!-- Boska Font -->
+<!-- Boska font -->
 <link href="https://api.fontshare.com/v2/css?f[]=boska@400,600&display=swap" rel="stylesheet">
 
 <style>
@@ -39,6 +38,7 @@
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    position: relative;
   }
 
   h1 {
@@ -181,21 +181,94 @@
     text-align: center;
   }
 
+  /* Settings panel */
+  #settingsToggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--accent-color);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background-color var(--transition);
+  }
+  #settingsToggle:hover {
+    background-color: #4b6f56;
+  }
+
+  #settingsPanel {
+    position: absolute;
+    top: 3.5rem;
+    right: 1rem;
+    width: 280px;
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    display: none;
+    z-index: 10;
+  }
+
+  #settingsPanel label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  #settingsPanel input[type="checkbox"] {
+    margin-right: 0.5rem;
+    transform: scale(1.15);
+    cursor: pointer;
+  }
+
+  #restoreDefaultsBtn {
+    margin-top: 1rem;
+    width: 100%;
+    background-color: var(--accent-color);
+    color: white;
+  }
+  #restoreDefaultsBtn:hover {
+    background-color: #4b6f56;
+  }
+
   @media (max-width: 500px) {
-    body { padding: 1rem; }
+    body {
+      padding: 1rem;
+    }
     .app-container {
       padding: 1.5rem 1rem;
       border-radius: 0;
       box-shadow: none;
       min-height: 100vh;
     }
-    button { width: 100%; }
+    button {
+      width: 100%;
+    }
+    #settingsPanel {
+      width: 90vw;
+      right: 5vw;
+      top: 3.5rem;
+    }
   }
 </style>
 </head>
 
 <body>
 <div class="app-container" role="main" aria-label="Wellbeing Idea Generator App">
+
+  <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
+
   <h1>Wellbeing Idea Generator</h1>
   <p class="fact">
     Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
@@ -223,13 +296,21 @@
       <button id="clearIdeasBtn">Clear My Ideas</button>
     </div>
 
-    <div class="idea-section">
+    <div class="idea-section" id="defaultIdeasSection">
       <strong>Default ideas:</strong>
       <ul id="defaultIdeasUl"></ul>
     </div>
   </div>
 
   <p class="footer-note">Ideas are stored locally in your browser. Refreshing will keep your list.</p>
+
+  <div id="settingsPanel" role="region" aria-label="Settings panel">
+    <label>
+      <input type="checkbox" id="toggleDefaults" />
+      Show default ideas
+    </label>
+    <button id="restoreDefaultsBtn">Restore All Default Ideas</button>
+  </div>
 </div>
 
 <script>
@@ -248,6 +329,8 @@
 
   let userIdeas = JSON.parse(localStorage.getItem('userIdeas')) || [];
   let activeDefaultIdeas = JSON.parse(localStorage.getItem('activeDefaultIdeas')) || [...defaultIdeas];
+  let showDefaults = JSON.parse(localStorage.getItem('showDefaults'));
+  if (showDefaults === null) showDefaults = true; // default true
 
   const ideaInput = document.getElementById('ideaInput');
   const addIdeaBtn = document.getElementById('addIdeaBtn');
@@ -259,6 +342,11 @@
   const userIdeasUl = document.getElementById('userIdeasUl');
   const defaultIdeasUl = document.getElementById('defaultIdeasUl');
   const clearIdeasBtn = document.getElementById('clearIdeasBtn');
+  const defaultIdeasSection = document.getElementById('defaultIdeasSection');
+  const settingsToggle = document.getElementById('settingsToggle');
+  const settingsPanel = document.getElementById('settingsPanel');
+  const toggleDefaultsCheckbox = document.getElementById('toggleDefaults');
+  const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
 
   function updateIdeaLists() {
     userIdeasUl.innerHTML = '';
@@ -279,25 +367,31 @@
       userIdeasUl.appendChild(li);
     });
 
-    activeDefaultIdeas.forEach((idea, index) => {
-      const li = document.createElement('li');
-      li.textContent = idea;
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = 'remove';
-      removeBtn.className = 'remove-btn';
-      removeBtn.onclick = () => {
-        activeDefaultIdeas.splice(index, 1);
-        saveIdeas();
-        updateIdeaLists();
-      };
-      li.appendChild(removeBtn);
-      defaultIdeasUl.appendChild(li);
-    });
+    if (showDefaults) {
+      defaultIdeasSection.style.display = 'block';
+      activeDefaultIdeas.forEach((idea, index) => {
+        const li = document.createElement('li');
+        li.textContent = idea;
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'remove';
+        removeBtn.className = 'remove-btn';
+        removeBtn.onclick = () => {
+          activeDefaultIdeas.splice(index, 1);
+          saveIdeas();
+          updateIdeaLists();
+        };
+        li.appendChild(removeBtn);
+        defaultIdeasUl.appendChild(li);
+      });
+    } else {
+      defaultIdeasSection.style.display = 'none';
+    }
   }
 
   function saveIdeas() {
     localStorage.setItem('userIdeas', JSON.stringify(userIdeas));
     localStorage.setItem('activeDefaultIdeas', JSON.stringify(activeDefaultIdeas));
+    localStorage.setItem('showDefaults', JSON.stringify(showDefaults));
   }
 
   addIdeaBtn.addEventListener('click', () => {
@@ -312,7 +406,9 @@
   });
 
   suggestIdeaBtn.addEventListener('click', () => {
-    const allIdeas = [...userIdeas, ...activeDefaultIdeas];
+    const allIdeas = [...userIdeas];
+    if (showDefaults) allIdeas.push(...activeDefaultIdeas);
+
     if (allIdeas.length === 0) {
       ideaDisplay.textContent = "No ideas available. Please add some!";
       ideaActions.style.display = 'none';
@@ -384,7 +480,37 @@ END:VCALENDAR`;
     }
   });
 
+  // Settings toggle
+  settingsToggle.addEventListener('click', () => {
+    const expanded = settingsToggle.getAttribute('aria-expanded') === 'true';
+    if (expanded) {
+      settingsPanel.style.display = 'none';
+      settingsToggle.setAttribute('aria-expanded', 'false');
+    } else {
+      settingsPanel.style.display = 'block';
+      settingsToggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  // Toggle default ideas visibility
+  toggleDefaultsCheckbox.checked = showDefaults;
+  toggleDefaultsCheckbox.addEventListener('change', () => {
+    showDefaults = toggleDefaultsCheckbox.checked;
+    saveIdeas();
+    updateIdeaLists();
+  });
+
+  // Restore all default ideas button
+  restoreDefaultsBtn.addEventListener('click', () => {
+    activeDefaultIdeas = [...defaultIdeas];
+    showDefaults = true;
+    toggleDefaultsCheckbox.checked = true;
+    saveIdeas();
+    updateIdeaLists();
+  });
+
   updateIdeaLists();
 </script>
+
 </body>
 </html>
