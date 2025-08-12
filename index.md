@@ -269,10 +269,11 @@
 
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
-  <h1>green-box - Plan for Kindness</h1>
-  <p class="fact">
+<h1 style="text-align:center;">green-box</h1>
+  <h2 style="text-align:center;">Plan for Kindness</h2>
+<p class="fact" style="text-align:center;">
     Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
-  </p>
+</p>
 
   <label for="ideaInput">Submit your idea:</label>
   <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
