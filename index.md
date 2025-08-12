@@ -277,10 +277,10 @@
 
   <label for="ideaInput">Submit your idea:</label>
   <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
-  <button id="addIdeaBtn" class="btn-primary">Add Idea</button>
+  <button id="addIdeaBtn" class="btn-primary">Add to box</button>
 
   <div class="actions">
-    <button id="suggestIdeaBtn" class="btn-secondary">Randomise an Idea</button>
+    <button id="suggestIdeaBtn" class="btn-secondary">Draw from box</button>
   </div>
 
   <div class="idea-display" id="ideaDisplay" aria-live="polite" aria-atomic="true"></div>
@@ -303,7 +303,7 @@
     </div>
   </div>
 
-  <p class="footer-note">Ideas are stored locally in your browser. Refreshing will keep your list.</p>
+  <p class="footer-note">Ideas are stored locally in the box. Refreshing will keep your list of ideas.</p>
 
   <div id="settingsPanel" role="region" aria-label="Settings panel">
     <label>
