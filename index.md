@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wellbeing Idea Generator</title>
 
-<!-- Boska Font from Fontshare -->
+<!-- Boska Font -->
 <link href="https://api.fontshare.com/v2/css?f[]=boska@400,600&display=swap" rel="stylesheet">
 
 <style>
@@ -18,7 +18,7 @@
     --danger-border: #f5c6cb;
     --danger-text: #a94442;
     --radius: 14px;
-    --transition: 0.2s ease;
+    --transition: 0.25s ease;
   }
 
   body {
@@ -29,7 +29,6 @@
     padding: 2rem;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
     min-height: 100vh;
   }
 
@@ -63,7 +62,8 @@
 
   input[type="text"] {
     width: 100%;
-    padding: 0.75rem 1rem;
+    max-width: 100%;
+    padding: 0.6rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
     font-family: 'Boska', serif;
@@ -79,7 +79,7 @@
   }
 
   button {
-    padding: 0.75rem 1.4rem;
+    padding: 0.65rem 1.2rem;
     border-radius: var(--radius);
     font-family: 'Boska', serif;
     font-size: 1rem;
@@ -116,6 +116,11 @@
     color: var(--accent-color);
     font-weight: 600;
     min-height: 2rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .idea-display.show {
+    opacity: 1;
   }
 
   .actions {
@@ -137,11 +142,33 @@
     margin-bottom: 0.5rem;
   }
 
+  .idea-section {
+    margin-bottom: 1rem;
+  }
+
+  .idea-section ul {
+    padding-left: 1.2rem;
+    margin-top: 0.25rem;
+  }
+
+  .remove-btn {
+    background: none;
+    border: none;
+    color: var(--danger-text);
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+  .remove-btn:hover {
+    text-decoration: underline;
+  }
+
   #clearIdeasBtn {
     background-color: var(--danger-bg);
     color: var(--danger-text);
     border: 1px solid var(--danger-border);
     font-weight: 600;
+    margin-top: 0.5rem;
   }
   #clearIdeasBtn:hover {
     background-color: #f8d7da;
@@ -154,20 +181,15 @@
     text-align: center;
   }
 
-  /* Mobile-first adjustments */
   @media (max-width: 500px) {
-    body {
-      padding: 1rem;
-    }
+    body { padding: 1rem; }
     .app-container {
       padding: 1.5rem 1rem;
       border-radius: 0;
       box-shadow: none;
       min-height: 100vh;
     }
-    button {
-      width: 100%;
-    }
+    button { width: 100%; }
   }
 </style>
 </head>
@@ -180,7 +202,7 @@
   </p>
 
   <label for="ideaInput">Submit your idea of something to do:</label>
-  <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" aria-describedby="ideaHelp" />
+  <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
   <button id="addIdeaBtn" class="btn-primary">Add Idea</button>
 
   <div class="actions">
@@ -194,18 +216,24 @@
     <button id="shareIdeaBtn" class="btn-secondary">Share Idea</button>
   </div>
 
-  <div class="idea-list" id="ideaList" aria-label="List of your ideas">
-    <strong>Your ideas:</strong>
-    <ul id="ideasUl" style="padding-left: 1.2rem; margin-top: 0;"></ul>
-    <button id="clearIdeasBtn">Clear Ideas</button>
+  <div class="idea-list">
+    <div class="idea-section">
+      <strong>Your ideas:</strong>
+      <ul id="userIdeasUl"></ul>
+      <button id="clearIdeasBtn">Clear My Ideas</button>
+    </div>
+
+    <div class="idea-section">
+      <strong>Default ideas:</strong>
+      <ul id="defaultIdeasUl"></ul>
+    </div>
   </div>
 
   <p class="footer-note">Ideas are stored locally in your browser. Refreshing will keep your list.</p>
 </div>
 
 <script>
-  // Predefined suggestions
-  const suggestedIdeas = [
+  const defaultIdeas = [
     "Take a 10-minute mindful walk outside",
     "Try a new healthy recipe",
     "Call a friend or family member",
@@ -218,7 +246,8 @@
     "Declutter a small area of your home"
   ];
 
-  let ideas = JSON.parse(localStorage.getItem('wellbeingIdeas')) || [...suggestedIdeas];
+  let userIdeas = JSON.parse(localStorage.getItem('userIdeas')) || [];
+  let activeDefaultIdeas = JSON.parse(localStorage.getItem('activeDefaultIdeas')) || [...defaultIdeas];
 
   const ideaInput = document.getElementById('ideaInput');
   const addIdeaBtn = document.getElementById('addIdeaBtn');
@@ -227,60 +256,88 @@
   const ideaActions = document.getElementById('ideaActions');
   const addToCalendarBtn = document.getElementById('addToCalendarBtn');
   const shareIdeaBtn = document.getElementById('shareIdeaBtn');
-  const ideasUl = document.getElementById('ideasUl');
+  const userIdeasUl = document.getElementById('userIdeasUl');
+  const defaultIdeasUl = document.getElementById('defaultIdeasUl');
   const clearIdeasBtn = document.getElementById('clearIdeasBtn');
 
-  function updateIdeaList() {
-    ideasUl.innerHTML = '';
-    ideas.forEach((idea) => {
+  function updateIdeaLists() {
+    userIdeasUl.innerHTML = '';
+    defaultIdeasUl.innerHTML = '';
+
+    userIdeas.forEach((idea, index) => {
       const li = document.createElement('li');
       li.textContent = idea;
-      ideasUl.appendChild(li);
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'remove';
+      removeBtn.className = 'remove-btn';
+      removeBtn.onclick = () => {
+        userIdeas.splice(index, 1);
+        saveIdeas();
+        updateIdeaLists();
+      };
+      li.appendChild(removeBtn);
+      userIdeasUl.appendChild(li);
+    });
+
+    activeDefaultIdeas.forEach((idea, index) => {
+      const li = document.createElement('li');
+      li.textContent = idea;
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'remove';
+      removeBtn.className = 'remove-btn';
+      removeBtn.onclick = () => {
+        activeDefaultIdeas.splice(index, 1);
+        saveIdeas();
+        updateIdeaLists();
+      };
+      li.appendChild(removeBtn);
+      defaultIdeasUl.appendChild(li);
     });
   }
 
   function saveIdeas() {
-    localStorage.setItem('wellbeingIdeas', JSON.stringify(ideas));
+    localStorage.setItem('userIdeas', JSON.stringify(userIdeas));
+    localStorage.setItem('activeDefaultIdeas', JSON.stringify(activeDefaultIdeas));
   }
 
   addIdeaBtn.addEventListener('click', () => {
     const newIdea = ideaInput.value.trim();
-    if(newIdea && !ideas.includes(newIdea)) {
-      ideas.push(newIdea);
+    if (newIdea && !userIdeas.includes(newIdea)) {
+      userIdeas.push(newIdea);
       saveIdeas();
-      updateIdeaList();
+      updateIdeaLists();
       ideaInput.value = '';
       ideaInput.focus();
     }
   });
 
   suggestIdeaBtn.addEventListener('click', () => {
-    if (ideas.length === 0) {
+    const allIdeas = [...userIdeas, ...activeDefaultIdeas];
+    if (allIdeas.length === 0) {
       ideaDisplay.textContent = "No ideas available. Please add some!";
       ideaActions.style.display = 'none';
       return;
     }
-    const randomIndex = Math.floor(Math.random() * ideas.length);
-    const idea = ideas[randomIndex];
+    const randomIndex = Math.floor(Math.random() * allIdeas.length);
+    const idea = allIdeas[randomIndex];
     ideaDisplay.textContent = idea;
+    ideaDisplay.classList.remove('show');
+    void ideaDisplay.offsetWidth; // restart animation
+    ideaDisplay.classList.add('show');
     ideaActions.style.display = 'flex';
-
     addToCalendarBtn.dataset.idea = idea;
     shareIdeaBtn.dataset.idea = idea;
   });
 
   addToCalendarBtn.addEventListener('click', () => {
     const idea = addToCalendarBtn.dataset.idea;
-    if(!idea) return;
-
+    if (!idea) return;
     const now = new Date();
     const start = new Date(now.getTime() + 60 * 60 * 1000);
     const end = new Date(start.getTime() + 30 * 60 * 1000);
-
     function formatDate(d) {
       return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
     }
-
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
@@ -290,10 +347,8 @@ DTEND:${formatDate(end)}
 DESCRIPTION:${idea}
 END:VEVENT
 END:VCALENDAR`;
-
     const blob = new Blob([icsContent], {type: 'text/calendar'});
     const url = URL.createObjectURL(blob);
-
     const link = document.createElement('a');
     link.href = url;
     link.download = 'wellbeing-idea.ics';
@@ -305,14 +360,10 @@ END:VCALENDAR`;
 
   shareIdeaBtn.addEventListener('click', async () => {
     const idea = shareIdeaBtn.dataset.idea;
-    if(!idea) return;
-
+    if (!idea) return;
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: 'Wellbeing Idea',
-          text: idea,
-        });
+        await navigator.share({ title: 'Wellbeing Idea', text: idea });
       } catch (err) {
         alert('Sharing cancelled or not supported.');
       }
@@ -326,17 +377,14 @@ END:VCALENDAR`;
   });
 
   clearIdeasBtn.addEventListener('click', () => {
-    if (confirm("Are you sure you want to clear all your ideas? This action cannot be undone.")) {
-      ideas = [...suggestedIdeas];
+    if (confirm("Clear all your personal ideas?")) {
+      userIdeas = [];
       saveIdeas();
-      updateIdeaList();
-      ideaDisplay.textContent = '';
-      ideaActions.style.display = 'none';
+      updateIdeaLists();
     }
   });
 
-  // Initialize
-  updateIdeaList();
+  updateIdeaLists();
 </script>
 </body>
 </html>
