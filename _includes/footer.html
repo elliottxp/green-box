@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<button onclick="topFunction()" id="backToTopBtn" title="Go to top">↑</button>
+
+<footer class="site-footer h-card">
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+  <div class="wrapper">
+    {% if site.title %}
+    <h2 class="footer-heading">{{ site.title | escape }}</h2>
+    {% endif %}
+    {% if site.description %}
+    <p>{{ site.description | escape }}</p>
+    {% endif %}
+    {% if site.email %}
+    <p><a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a></p>
+    {% endif %}
+    <div class="social-links">
+      {%- include social.html -%}
+    </div>
+  </div>
+</footer>
+
+<script>
+  let mybutton = document.getElementById("backToTopBtn");
+  let isScrolling = false;
+
+  window.onscroll = function() {
+    if (!isScrolling) {
+      scrollFunction();
+    }
+  };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+
+  function topFunction() {
+    isScrolling = true;
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    
+    // Reset isScrolling after animation completes
+    setTimeout(() => {
+      isScrolling = false;
+    }, 1000);
+  }
+
+  // Allow manual scroll interrupt
+  document.addEventListener('wheel', function() {
+    isScrolling = false;
+  }, { passive: true });
+  
+  document.addEventListener('touchmove', function() {
+    isScrolling = false;
+  }, { passive: true });
+</script>
