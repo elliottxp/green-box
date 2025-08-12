@@ -1,182 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wellbeing Idea App</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wellbeing Idea Generator</title>
 <style>
-  /* Using Aesop Regular custom font */
-  @font-face {
-    font-family: 'AesopRegular';
-    src: url('https://db.onlinewebfonts.com/t/f013f368755877264cb04fb82a39fc60.woff2') format('woff2'),
-         url('https://db.onlinewebfonts.com/t/f013f368755877264cb04fb82a39fc60.woff') format('woff'),
-         url('https://db.onlinewebfonts.com/t/f013f368755877264cb04fb82a39fc60.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&display=swap');
 
   :root {
-    --bg-color: #fcfbf9;
-    --text-color: #2c2a28;
-    --accent-color: #c1c0bd;
-    --button-bg: #e5e3df;
-    --button-hover: #d1cec9;
-    --border-color: #bebbb5;
+    --bg-color: #f5f4f2;
+    --text-color: #3b3a36;
+    --accent-color: #75896b; /* muted green */
+    --button-bg: #d7d9d5;
+    --button-hover-bg: #c3c6be;
+    --clear-btn-bg: #f2dede;
+    --clear-btn-text: #a94442;
+    --clear-btn-border: #ebccd1;
   }
 
   body {
-    margin: 0;
-    padding: 20px;
-    font-family: 'AesopRegular', serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.6;
+    font-family: 'Spectral', serif;
+    margin: 0; padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
   }
 
-  .container {
-    max-width: 500px;
-    margin: auto;
+  .app-container {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.07);
   }
 
   h1 {
-    font-size: 1.8rem; /* ~18pt */
-    text-align: center;
-    margin-bottom: 0.5em;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .fact {
-    background-color: var(--accent-color);
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 1em;
-    font-size: 1rem;
+    font-style: italic;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
   }
 
-  input, button {
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  input[type="text"] {
     width: 100%;
-    padding: 14px;
-    margin-bottom: 12px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #c3c6be;
+    border-radius: 4px;
+    font-family: 'Spectral', serif;
     font-size: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
+    margin-bottom: 1rem;
+    color: var(--text-color);
   }
 
   button {
     background-color: var(--button-bg);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    font-family: 'Spectral', serif;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.3s ease;
+    color: var(--text-color);
+    margin-right: 0.8rem;
   }
+
   button:hover {
-    background-color: var(--button-hover);
+    background-color: var(--button-hover-bg);
   }
 
-  .ideas-list {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 12px;
+  .idea-display {
+    margin: 1rem 0 2rem 0;
+    font-size: 1.2rem;
+    min-height: 2.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
   }
 
-  .ideas-list li {
-    background: white;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 8px;
+  .actions {
+    margin-top: 1rem;
   }
 
-  .result-box {
-    background: white;
-    padding: 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    font-size: 1.1rem;
+  .idea-list {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #7a7a75;
+    max-height: 100px;
+    overflow-y: auto;
+    border-top: 1px solid #e0e0d9;
+    padding-top: 0.5rem;
+  }
+
+  .idea-list strong {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--text-color);
+  }
+
+  #clearIdeasBtn {
+    margin-top: 0.8rem;
+    background-color: var(--clear-btn-bg);
+    color: var(--clear-btn-text);
+    border: 1px solid var(--clear-btn-border);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  #clearIdeasBtn:hover {
+    background-color: #e6b8b8;
+  }
+
+  .footer-note {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #a0a09c;
     text-align: center;
-    margin-bottom: 12px;
   }
 
-  @media (max-width: 600px) {
+  /* Responsive / Mobile Friendly */
+  @media (max-width: 480px) {
+    body {
+      padding: 1rem;
+      align-items: center;
+    }
+
+    .app-container {
+      padding: 1.5rem 1rem;
+      max-width: 100%;
+      box-shadow: none;
+      border-radius: 0;
+      min-height: 100vh;
+    }
+
     h1 {
       font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .fact {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    input[type="text"], button {
+      font-size: 1.1rem;
+      padding: 0.8rem 1rem;
+    }
+
+    input[type="text"] {
+      margin-bottom: 1.25rem;
+    }
+
+    button {
+      width: 100%;
+      margin: 0 0 1rem 0;
+      border-radius: 6px;
+      margin-right: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .idea-display {
+      font-size: 1.3rem;
+      text-align: center;
+      min-height: 3rem;
+      margin: 1.5rem 0 2rem 0;
+    }
+
+    .idea-list {
+      max-height: 150px;
+      font-size: 0.95rem;
+      padding: 0.75rem 0.5rem;
+    }
+
+    #clearIdeasBtn {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .footer-note {
+      font-size: 0.8rem;
+      padding: 0 0.5rem;
     }
   }
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Wellbeing Idea App</h1>
-    <p class="fact">Did you know? Even 10 minutes of stepping away from screens and being active improves your mood and focus.</p>
 
-    <input type="text" id="ideaInput" placeholder="eg. Take a 10-minute walk">
-    <button onclick="addIdea()">Add Idea</button>
-    <button onclick="pickIdea()">Suggest an Idea</button>
-    <button onclick="clearIdeas()">Clear All Ideas</button>
+<div class="app-container" role="main" aria-label="Wellbeing Idea Generator App">
 
-    <ul class="ideas-list" id="ideasList"></ul>
+  <h1>Wellbeing Idea Generator</h1>
+  <p class="fact">Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.</p>
 
-    <div class="result-box" id="resultBox">Your suggestion will appear here.</div>
-    <button onclick="addToCalendar()">Add to Calendar</button>
-    <button onclick="shareIdea()">Share</button>
+  <label for="ideaInput">Submit your idea of something to do:</label>
+  <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" aria-describedby="ideaHelp" />
+  <button id="addIdeaBtn">Add Idea</button>
+
+  <div class="actions">
+    <button id="suggestIdeaBtn">Suggest an Idea</button>
   </div>
 
-  <script>
-    let ideas = [];
+  <div class="idea-display" id="ideaDisplay" aria-live="polite" aria-atomic="true"></div>
 
-    function addIdea() {
-      const input = document.getElementById('ideaInput');
-      const val = input.value.trim();
-      if (val) {
-        ideas.push(val);
-        updateList();
-        input.value = '';
-      }
+  <div class="actions" id="ideaActions" style="display:none;">
+    <button id="addToCalendarBtn">Add to Calendar</button>
+    <button id="shareIdeaBtn">Share Idea</button>
+  </div>
+
+  <div class="idea-list" id="ideaList" aria-label="List of your ideas">
+    <strong>Your ideas:</strong>
+    <ul id="ideasUl" style="padding-left: 1.2rem; margin-top: 0;"></ul>
+    <button id="clearIdeasBtn">Clear Ideas</button>
+  </div>
+
+  <p class="footer-note">Ideas are stored locally in your browser. Refreshing will keep your list.</p>
+</div>
+
+<script>
+  // Predefined suggestions to seed the list
+  const suggestedIdeas = [
+    "Take a 10-minute mindful walk outside",
+    "Try a new healthy recipe",
+    "Call a friend or family member",
+    "Do a 5-minute stretching routine",
+    "Write down three things you’re grateful for",
+    "Read a chapter of a book",
+    "Meditate for 5 minutes",
+    "Drink a glass of water",
+    "Spend 10 minutes journaling",
+    "Declutter a small area of your home"
+  ];
+
+  // Load ideas from localStorage or initialize
+  let ideas = JSON.parse(localStorage.getItem('wellbeingIdeas')) || [...suggestedIdeas];
+
+  const ideaInput = document.getElementById('ideaInput');
+  const addIdeaBtn = document.getElementById('addIdeaBtn');
+  const suggestIdeaBtn = document.getElementById('suggestIdeaBtn');
+  const ideaDisplay = document.getElementById('ideaDisplay');
+  const ideaActions = document.getElementById('ideaActions');
+  const addToCalendarBtn = document.getElementById('addToCalendarBtn');
+  const shareIdeaBtn = document.getElementById('shareIdeaBtn');
+  const ideasUl = document.getElementById('ideasUl');
+  const clearIdeasBtn = document.getElementById('clearIdeasBtn');
+
+  function updateIdeaList() {
+    ideasUl.innerHTML = '';
+    ideas.forEach((idea) => {
+      const li = document.createElement('li');
+      li.textContent = idea;
+      ideasUl.appendChild(li);
+    });
+  }
+
+  function saveIdeas() {
+    localStorage.setItem('wellbeingIdeas', JSON.stringify(ideas));
+  }
+
+  addIdeaBtn.addEventListener('click', () => {
+    const newIdea = ideaInput.value.trim();
+    if(newIdea && !ideas.includes(newIdea)) {
+      ideas.push(newIdea);
+      saveIdeas();
+      updateIdeaList();
+      ideaInput.value = '';
+      ideaInput.focus();
+    }
+  });
+
+  suggestIdeaBtn.addEventListener('click', () => {
+    if (ideas.length === 0) {
+      ideaDisplay.textContent = "No ideas available. Please add some!";
+      ideaActions.style.display = 'none';
+      return;
+    }
+    const randomIndex = Math.floor(Math.random() * ideas.length);
+    const idea = ideas[randomIndex];
+    ideaDisplay.textContent = idea;
+    ideaActions.style.display = 'block';
+
+    // Set current idea for calendar/share
+    addToCalendarBtn.dataset.idea = idea;
+    shareIdeaBtn.dataset.idea = idea;
+  });
+
+  addToCalendarBtn.addEventListener('click', () => {
+    const idea = addToCalendarBtn.dataset.idea;
+    if(!idea) return;
+
+    // Create an .ics calendar event for today + 1 hour, 30min duration
+    const now = new Date();
+    const start = new Date(now.getTime() + 60 * 60 * 1000);
+    const end = new Date(start.getTime() + 30 * 60 * 1000);
+
+    function formatDate(d) {
+      return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
     }
 
-    function updateList() {
-      const list = document.getElementById('ideasList');
-      list.innerHTML = '';
-      ideas.forEach((idea) => {
-        const li = document.createElement('li');
-        li.textContent = idea;
-        list.appendChild(li);
+    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:${idea}
+DTSTART:${formatDate(start)}
+DTEND:${formatDate(end)}
+DESCRIPTION:${idea}
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsContent], {type: 'text/calendar'});
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'wellbeing-idea.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+
+  shareIdeaBtn.addEventListener('click', async () => {
+    const idea = shareIdeaBtn.dataset.idea;
+    if(!idea) return;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Wellbeing Idea',
+          text: idea,
+        });
+      } catch (err) {
+        alert('Sharing cancelled or not supported.');
+      }
+    } else {
+      // fallback: copy to clipboard
+      navigator.clipboard.writeText(idea).then(() => {
+        alert('Idea copied to clipboard!');
+      }, () => {
+        alert('Failed to copy idea.');
       });
     }
+  });
 
-    function pickIdea() {
-      if (!ideas.length) return alert('No ideas available.');
-      const rand = ideas[Math.floor(Math.random() * ideas.length)];
-      document.getElementById('resultBox').textContent = rand;
+  clearIdeasBtn.addEventListener('click', () => {
+    if (confirm("Are you sure you want to clear all your ideas? This action cannot be undone.")) {
+      ideas = [...suggestedIdeas]; // reset to original suggestions
+      saveIdeas();
+      updateIdeaList();
+      ideaDisplay.textContent = '';
+      ideaActions.style.display = 'none';
     }
+  });
 
-    function clearIdeas() {
-      if (confirm('Clear all ideas?')) {
-        ideas = [];
-        updateList();
-        document.getElementById('resultBox').textContent = 'Your suggestion will appear here.';
-      }
-    }
+  // Init UI
+  updateIdeaList();
+</script>
 
-    function addToCalendar() {
-      const idea = document.getElementById('resultBox').textContent;
-      if (!idea || idea.includes('Your suggestion')) {
-        return alert('No idea selected.');
-      }
-      const start = new Date();
-      const end = new Date(start.getTime() + 60 * 60 * 1000);
-      const startISO = start.toISOString().replace(/[-:.\d]/g, '');
-      const endISO = end.toISOString().replace(/[-:.\d]/g, '');
-      const dataUri = `data:text/calendar;charset=utf8,BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:${startISO}\nDTEND:${endISO}\nSUMMARY:${idea}\nEND:VEVENT\nEND:VCALENDAR`;
-      window.location.href = dataUri;  // Should prompt iOS Calendar
-    }
-
-    function shareIdea() {
-      const idea = document.getElementById('resultBox').textContent;
-      if (navigator.share && idea && !idea.includes('Your suggestion')) {
-        navigator.share({ title: 'Wellbeing Idea', text: idea });
-      } else {
-        alert('Sharing not supported or no idea selected.');
-      }
-    }
-  </script>
 </body>
 </html>
-
