@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Wellbeing Idea Generator</title>
+<title>green box</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;600&display=swap');
 
@@ -212,7 +212,7 @@
 
 <div class="app-container" role="main" aria-label="Wellbeing Idea Generator App">
 
-  <h1>Wellbeing Idea Generator</h1>
+  <h1>green box</h1>
   <p class="fact">Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.</p>
 
   <label for="ideaInput">Submit your idea of something to do:</label>
@@ -243,14 +243,12 @@
   // Predefined suggestions to seed the list
   const suggestedIdeas = [
     "Take a 10-minute mindful walk outside",
-    "Try a new healthy recipe",
     "Call a friend or family member",
     "Do a 5-minute stretching routine",
     "Write down three things you’re grateful for",
     "Read a chapter of a book",
     "Meditate for 5 minutes",
     "Drink a glass of water",
-    "Spend 10 minutes journaling",
     "Declutter a small area of your home"
   ];
 
