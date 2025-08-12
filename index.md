@@ -265,21 +265,21 @@
 </head>
 
 <body>
-<div class="app-container" role="main" aria-label="Wellbeing Idea Generator App">
+<div class="app-container" role="main" aria-label="Green-box Idea Generator App">
 
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
-  <h1>Wellbeing Idea Generator</h1>
+  <h1>green-box idea generator</h1>
   <p class="fact">
     Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
   </p>
 
-  <label for="ideaInput">Submit your idea of something to do:</label>
+  <label for="ideaInput">Submit your idea:</label>
   <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
   <button id="addIdeaBtn" class="btn-primary">Add Idea</button>
 
   <div class="actions">
-    <button id="suggestIdeaBtn" class="btn-secondary">Suggest an Idea</button>
+    <button id="suggestIdeaBtn" class="btn-secondary">Randomise an Idea</button>
   </div>
 
   <div class="idea-display" id="ideaDisplay" aria-live="polite" aria-atomic="true"></div>
@@ -316,14 +316,12 @@
 <script>
   const defaultIdeas = [
     "Take a 10-minute mindful walk outside",
-    "Try a new healthy recipe",
     "Call a friend or family member",
     "Do a 5-minute stretching routine",
     "Write down three things you’re grateful for",
     "Read a chapter of a book",
     "Meditate for 5 minutes",
     "Drink a glass of water",
-    "Spend 10 minutes journaling",
     "Declutter a small area of your home"
   ];
 
