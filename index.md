@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Green-box</title>
+<title>green-box</title>
 
 <!-- Boska font -->
 <link href="https://api.fontshare.com/v2/css?f[]=boska@400,600&display=swap" rel="stylesheet">
@@ -294,7 +294,7 @@
     <div class="idea-section">
       <strong>Your ideas:</strong>
       <ul id="userIdeasUl"></ul>
-      <button id="clearIdeasBtn">Clear My Ideas</button>
+      <button id="clearIdeasBtn">Bin My Ideas</button>
     </div>
 
     <div class="idea-section" id="defaultIdeasSection">
