@@ -186,7 +186,7 @@
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: var(--accent-color);
+    background: none;
     border: none;
     border-radius: 50%;
     width: 36px;
