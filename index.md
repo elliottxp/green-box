@@ -472,7 +472,7 @@ END:VCALENDAR`;
   });
 
   clearIdeasBtn.addEventListener('click', () => {
-    if (confirm("Clear all your personal ideas?")) {
+    if (confirm("Are you sure you want to bin all your personal ideas?")) {
       userIdeas = [];
       saveIdeas();
       updateIdeaLists();
