@@ -1,10 +1,10 @@
-title: "green box"
+title: "green-box"
 #author: ""
-description: "shake the box" # This will show up in places like twitter, linkedin, etc, if you share your sites url as a post.
+description: "plan for kindness" # This will show up in places like twitter, linkedin, etc, if you share your sites url as a post.
 
 # Email / Social media user names used by the minima theme:
 # All of these are optional and can be removed or commented out
-email: "info@green-box.com"
+email: "relax@green-box.app"
 #twitter_username: "twitteruser"
 #github_username: "elliottxp"
 #linkedin_username: "linkedinuser"
@@ -17,7 +17,7 @@ email: "info@green-box.com"
 
 theme: "minima"
     
-rss: rss
+#rss: rss
 
 kramdown:
   syntax_highlighter_opts:
