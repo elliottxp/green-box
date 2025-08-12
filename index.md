@@ -2,7 +2,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Wellbeing Idea Generator</title>
+<title>Green-box</title>
 
 <!-- Boska font -->
 <link href="https://api.fontshare.com/v2/css?f[]=boska@400,600&display=swap" rel="stylesheet">
@@ -265,11 +265,11 @@
 </head>
 
 <body>
-<div class="app-container" role="main" aria-label="Green-box Idea Generator App">
+<div class="app-container" role="main" aria-label="Green-box">
 
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
-  <h1>green-box idea generator</h1>
+  <h1>Green-box - Plan Kindness</h1>
   <p class="fact">
     Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
   </p>
