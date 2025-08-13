@@ -38,7 +38,6 @@
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-    position: relative;
   }
 
   h1 {
