@@ -38,6 +38,7 @@
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    position: relative;
   }
 
   h1 {
@@ -69,7 +70,6 @@
     font-size: 1rem;
     margin-bottom: 1rem;
     transition: border-color var(--transition), box-shadow var(--transition);
-    box-sizing: border-box;
   }
 
   input[type="text"]:focus {
