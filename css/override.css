@@ -1,9 +1,57 @@
-hr {
-  margin-top: 30px;
-  margin-bottom: 20px;
+/* =========================
+   Global Styles
+========================= */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Post navigation links */
+body {
+  background-color: var(--bg-color, #f9f9f9);
+  color: var(--text-color, #000);
+  font-family: 'Boska', serif;
+  margin: 0;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font: normal 1em / 1.5em BlinkMacSystemFont, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif;
+}
+
+h1 {
+  font-size: 1.5em;
+  color: #555;
+  text-align: center;
+}
+
+hr {
+  margin: 30px 0 20px;
+}
+
+audio {
+  display: block;
+  margin: auto;
+}
+
+/* =========================
+   Inputs
+========================= */
+input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: var(--radius, 4px);
+  font-family: 'Boska', serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color var(--transition, 0.3s), box-shadow var(--transition, 0.3s);
+}
+
+/* =========================
+   Post Navigation
+========================= */
 .post_navi {
   display: flex;
   justify-content: space-between;
@@ -30,55 +78,54 @@ hr {
   text-decoration: underline;
 }
 
-/*works html formatting */
-.scaled-image {
-  width: 60%; /* Adjust the width as needed */
-  height: auto; /* Maintain the aspect ratio */
-}
+/* =========================
+   Works / Image Grid
+========================= */
 .image-grid {
   display: grid;
-  grid-template-columns: 1fr; /* Single column */
-  gap: 32px; /* Space between images */
-  max-width: 800px; /* Maximum width of container */
-  margin: 0 auto; /* Center the grid container */
+  grid-template-columns: 1fr;
+  gap: 32px;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
 }
 
 .scaled-image {
-  width: 60%; /* Adjust width of images */
+  width: 60%;
   height: auto;
   display: block;
-  margin: 0 auto; /* Center each image */
+  margin: 0 auto;
 }
 
 figure {
   margin: 0;
   padding: 0;
-  text-align: center; /* Center the caption text */
+  text-align: center;
 }
 
 figcaption {
-  margin-top: 8px; /* Space between the image and the caption */
+  margin-top: 8px;
   font-size: 0.9em;
-  color: #555; /* Adjust the caption color as needed */
-  text-align: center; /* Justify the caption text */
-  width: 100%; /* Ensure the caption matches the width of the image */
-  display: block; /* Ensure the caption respects the width */
+  color: #555;
+  text-align: center;
+  width: 100%;
+  display: block;
 }
 
-/* Modal styles */
+/* =========================
+   Modal
+========================= */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modal-content {
@@ -116,52 +163,9 @@ figcaption {
   cursor: pointer;
 }
 
-
-/* Smooth scrolling for the entire document */
-html {
-  scroll-behavior: smooth;
-}
-
-
-body {
-  background-color: #f9f9f9;
-  font: normal 1em / 1.5em BlinkMacSystemFont, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif;
-}
-
-h1 {
-  font-size: 1.5em;
-  color: #555;
-  text-align: center;
-}
-
-audio {
-  display:block;
-  margin: auto;
-}
-
-#backToTopBtn {
-  display: none; /* Hidden by default */
-  position: fixed; /* Fixed position */
-  bottom: 20px; /* Place the button 20px from the bottom */
-  right: 30px; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
-  border: none; /* Remove borders */
-  outline: none; /* Remove outline */
-  background-color: #555; /* Set a background color */
-  color: white; /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 15px; /* Some padding */
-  border-radius: 10px; /* Rounded corners */
-  font-size: 18px; /* Increase font size */
-}
-
-#backToTopBtn:hover {
-  background-color: #333; /* Add a dark-grey background on hover */
-}
-
-
-/*  social icons */
-
+/* =========================
+   Social Icons
+========================= */
 .social-icon {
   display: inline-block;
   margin-right: 10px;
@@ -173,4 +177,30 @@ audio {
 
 .social-icon:hover {
   color: #000;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 500px) {
+  body {
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .app-container {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  input[type="text"] {
+    font-size: 1rem;
+    padding: 0.5rem 0.8rem;
+  }
 }
