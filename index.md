@@ -60,19 +60,25 @@
     margin-bottom: 0.5rem;
   }
 
-  input[type="text"] {
+  .input-group {
+    display: flex;
+    gap: 0.5rem;
     width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  .input-group input[type="text"] {
+    flex: 1;
     max-width: 100%;
     padding: 0.6rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
     font-family: 'Boska', serif;
     font-size: 1rem;
-    margin-bottom: 1rem;
     transition: border-color var(--transition), box-shadow var(--transition);
   }
 
-  input[type="text"]:focus {
+  .input-group input[type="text"]:focus {
     outline: none;
     border-color: var(--accent-color);
     box-shadow: 0 0 0 3px rgba(90,127,101,0.15);
@@ -252,6 +258,9 @@
       box-shadow: none;
       min-height: 100vh;
     }
+    .input-group {
+      flex-direction: column;
+    }
     button {
       width: 100%;
     }
@@ -269,15 +278,17 @@
 
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
-<h1 style="text-align:center;">green-box</h1>
+  <h1 style="text-align:center;">green-box</h1>
   <h2 style="text-align:center;">Plan for Kindness</h2>
-<p class="fact" style="text-align:center;">
+  <p class="fact" style="text-align:center;">
     Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
-</p>
+  </p>
 
   <label for="ideaInput">Submit your idea:</label>
-  <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
-  <button id="addIdeaBtn" class="btn-primary">Add to box</button>
+  <div class="input-group">
+    <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
+    <button id="addIdeaBtn" class="btn-primary">Add to box</button>
+  </div>
 
   <div class="actions">
     <button id="suggestIdeaBtn" class="btn-secondary">Draw from box</button>
@@ -329,7 +340,7 @@
   let userIdeas = JSON.parse(localStorage.getItem('userIdeas')) || [];
   let activeDefaultIdeas = JSON.parse(localStorage.getItem('activeDefaultIdeas')) || [...defaultIdeas];
   let showDefaults = JSON.parse(localStorage.getItem('showDefaults'));
-  if (showDefaults === null) showDefaults = true; // default true
+  if (showDefaults === null) showDefaults = true;
 
   const ideaInput = document.getElementById('ideaInput');
   const addIdeaBtn = document.getElementById('addIdeaBtn');
@@ -417,7 +428,7 @@
     const idea = allIdeas[randomIndex];
     ideaDisplay.textContent = idea;
     ideaDisplay.classList.remove('show');
-    void ideaDisplay.offsetWidth; // restart animation
+    void ideaDisplay.offsetWidth;
     ideaDisplay.classList.add('show');
     ideaActions.style.display = 'flex';
     addToCalendarBtn.dataset.idea = idea;
@@ -479,7 +490,6 @@ END:VCALENDAR`;
     }
   });
 
-  // Settings toggle
   settingsToggle.addEventListener('click', () => {
     const expanded = settingsToggle.getAttribute('aria-expanded') === 'true';
     if (expanded) {
@@ -491,7 +501,6 @@ END:VCALENDAR`;
     }
   });
 
-  // Toggle default ideas visibility
   toggleDefaultsCheckbox.checked = showDefaults;
   toggleDefaultsCheckbox.addEventListener('change', () => {
     showDefaults = toggleDefaultsCheckbox.checked;
@@ -499,7 +508,6 @@ END:VCALENDAR`;
     updateIdeaLists();
   });
 
-  // Restore all default ideas button
   restoreDefaultsBtn.addEventListener('click', () => {
     activeDefaultIdeas = [...defaultIdeas];
     showDefaults = true;
