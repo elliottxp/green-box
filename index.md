@@ -70,6 +70,7 @@
     font-size: 1rem;
     margin-bottom: 1rem;
     transition: border-color var(--transition), box-shadow var(--transition);
+    box-sizing: border-box;
   }
 
   input[type="text"]:focus {
