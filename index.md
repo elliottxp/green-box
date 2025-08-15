@@ -343,14 +343,33 @@
 
 <script>
     const defaultIdeas = [
-    "Take a 10-minute mindful walk outside",
-    "Call a friend or family member",
-    "Do a 5-minute stretching routine",
-    "Write down three things you’re grateful for",
-    "Read a chapter of a book",
+    "Go and try a new cafe",
+    "Do some art",
+    "Play basketball",
+    "Go to the observatory",
+    "Drive somewhere 1 hour away",
     "Meditate for 5 minutes",
-    "Drink a glass of water",
-    "Declutter a small area of your home"
+    "Play a board game",
+    "Go get an icey creamy",
+    "Eat pizza and watch the sunset",
+    "Go to botanical gardens or arboretum",
+    "Go bowling",
+    "Read books at the cafe",
+    "Play tennis",
+    "Go ice skating",
+    "Take photos of things outdoors",
+    "Go for a walk around the block",
+    "Go for a swim at the pool, salt & vinegar chips as a reward",
+    "Cook some muffins",
+    "Go to the Art Gallery",
+    "Pick again to add suspense",
+    "Cook something new",
+    "Go for a bike ride",
+    "Take a game to a cafe",
+    "Go get Fish and Chips",
+    "Hike on the mountain",
+    "Listen to some music",
+    "Have a picnic"
   ];
 
   let userIdeas = JSON.parse(localStorage.getItem('userIdeas')) || [];
