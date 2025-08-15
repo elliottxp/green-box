@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 
-
-<footer class="site-footer h-card">
+<footer class="site-footer h-card" style="text-align: left; font-size: 0.85rem; color: #666; padding: 1em 0;">
   <data class="u-url" href="{{ "/" | relative_url }}"></data>
-  <div class="wrapper">
-    {% if site.title %}
-    <h2 class="footer-heading">{{ site.title | escape }}</h2>
-    {% endif %}
+  <div class="wrapper" style="max-width: 1000px; margin: 0 auto;">
     {% if site.description %}
-    <p>{{ site.description | escape }}</p>
+    <p style="margin: 0.25em 0;">{{ site.description | escape }}</p>
     {% endif %}
     {% if site.email %}
-    <p><a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a></p>
+    <p style="margin: 0.25em 0;">
+      <a href="mailto:{{ site.email | escape }}" style="color: #666; text-decoration: none;">
+        {{ site.email | escape }}
+      </a>
+    </p>
     {% endif %}
-    <div class="social-links">
+    <div class="social-links" style="margin: 0.5em 0;">
       {%- include social.html -%}
     </div>
+    <p style="margin: 0.5em 0;">&copy; {{ site.title | escape }} {{ 'now' | date: "%Y" }}</p>
   </div>
 </footer>
 
@@ -50,7 +51,6 @@
     }, 1000);
   }
 
-  // Allow manual scroll interrupt
   document.addEventListener('wheel', function() {
     isScrolling = false;
   }, { passive: true });
