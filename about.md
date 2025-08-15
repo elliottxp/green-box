@@ -1,6 +1,127 @@
 ---
-layout: about
-title: about
+layout: default
+description: "plan for kindness"
+title: "about - green-box"
 permalink: /about/
 order: 2
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>about - green-box</title>
+
+<!-- Load custom font -->
+<style>
+  @font-face {
+    font-family: 'Aesop';
+    src: url('Font%20Regular.ttf') format('truetype'); /* URL-encoded space */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box; /* prevent overflow */
+  }
+
+  :root {
+    --bg-color: #f9f9f9;
+    --text-color: #2c2c2c;
+    --accent-color: #5a7f65;
+    --border-color: #e0e0e0;
+    --radius: 14px;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Aesop', serif;
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    min-height: 100vh;
+  }
+
+  .about-container {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    margin: 0 auto; /* horizontal center */
+    position: relative; /* for future absolute elements like settings button */
+  }
+
+  h1 {
+    font-family: 'Aesop';
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    text-align: center;
+  }
+
+  h2 {
+    font-family: 'Aesop';
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+  }
+
+  p {
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  a:hover,
+  a:focus {
+    border-color: var(--accent-color);
+    outline: none;
+  }
+
+  @media (max-width: 500px) {
+    body {
+      padding: 1rem;
+    }
+    .about-container {
+      padding: 1.5rem;
+      border-radius: 0;
+      box-shadow: none;
+      min-height: 100vh;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <section class="about-container" aria-labelledby="aboutTitle">
+    <h1 id="aboutTitle">about green-box</h1>
+
+    <p>My wife and I sometimes found ourselves unsure of what to do on weekends or during our spare time. One day, I wanted to add a bit of randomness to our plans. So, I took an old box and covered it in green tissue paper. We often argued about always doing what one of us wanted rather than the other. To solve this, I wrote down activities I wanted to do with her on small pieces of paper, scrunched them up, and placed them in the box. She did the same. Before long, we had a box full of our ideas. When we were bored or need something to to, we would take turns pulling ideas out of the green-box at random. This box became a great way to ease tension — we could both contribute what we wanted to do, and the final choice would be left up to chance.</p>
+    <p>I wanted to share this idea with others, so I created the green-box idea generator.</p>
+    <p>My aim is to help you create healthier, happier habits by inspiring small, meaningful activities every day. I believe even the smallest changes can make a big difference in your wellbeing, in the prime of our green-box use, I felt content.</p>
+    
+    <img src="/img/box.png" alt="Green Box" style="max-width:100%; height:auto; display:block; margin:20px 0;" />
+
+    <h2>What the page does?</h2>
+    <p>This website offers daily wellbeing ideas, lets you submit your own, and helps you build a personalised list of activities to refresh your mind and body.</p>
+
+    <h2>Contact Me</h2>
+    <p>Have questions or feedback? Reach out at <a href="mailto:relax@green-box.app">relax@green-box.app</a> — I'd love to hear from you!</p>
+  </section>
+</body>
+</html>
