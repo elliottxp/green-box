@@ -4,8 +4,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>green-box</title>
 
-<!-- Boska font -->
-<link href="https://api.fontshare.com/v2/css?f[]=boska@400,600&display=swap" rel="stylesheet">
+<!-- Load custom font -->
+<style>
+  @font-face {
+    font-family: 'Aesop';
+    src: url('Font%20Regular.ttf') format('truetype'); /* URL-encoded space */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  :root {
+    --bg-color: #f9f9f9;
+    --text-color: #2c2c2c;
+    --accent-color: #5a7f65;
+    --border-color: #e0e0e0;
+    --danger-bg: #fdeaea;
+    --danger-border: #f5c6cb;
+    --danger-text: #a94442;
+    --radius: 14px;
+    --transition: 0.25s ease;
+  }
 
 <style>
   :root {
@@ -23,7 +41,7 @@
   body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Boska', serif;
+    font-family: 'Aesop', serif;
     margin: 0;
     padding: 2rem;
     display: flex;
@@ -66,7 +84,7 @@
     padding: 0.6rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
-    font-family: 'Boska', serif;
+    font-family: 'Aesop', serif;
     font-size: 1rem;
     margin-bottom: 1rem;
     transition: border-color var(--transition), box-shadow var(--transition);
@@ -81,7 +99,7 @@
   button {
     padding: 0.65rem 1.2rem;
     border-radius: var(--radius);
-    font-family: 'Boska', serif;
+    font-family: 'Aesop', serif;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
