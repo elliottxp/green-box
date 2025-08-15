@@ -56,23 +56,25 @@
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-    position: relative;
+    position: center;
   }
 
   h1 {
+    font-family: 'Aesop';
     font-weight: 600;
     font-size: 2rem;
     margin-bottom: 0.75rem;
   }
 
   .fact {
-    font-style: italic;
+    font-family: 'Aesop';
     color: var(--accent-color);
     margin-bottom: 1.5rem;
     line-height: 1.4;
   }
 
   label {
+    font-family: 'Aesop';
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -130,6 +132,7 @@
 
   .idea-display {
     margin: 1.5rem 0;
+    font-family: 'Aesop';
     font-size: 1.3rem;
     color: var(--accent-color);
     font-weight: 600;
@@ -152,6 +155,7 @@
     margin-top: 1.5rem;
     border-top: 1px solid var(--border-color);
     padding-top: 0.75rem;
+    font-family: 'Aesop';
     font-size: 0.95rem;
   }
 
@@ -173,6 +177,7 @@
     background: none;
     border: none;
     color: var(--danger-text);
+    font-family: 'Aesop';
     font-size: 0.85rem;
     margin-left: 0.5rem;
     cursor: pointer;
@@ -185,6 +190,7 @@
     background-color: var(--danger-bg);
     color: var(--danger-text);
     border: 1px solid var(--danger-border);
+    font-family: 'Aesop';
     font-weight: 600;
     margin-top: 0.5rem;
   }
@@ -194,6 +200,7 @@
 
   .footer-note {
     margin-top: 2rem;
+    font-family: 'Aesop';
     font-size: 0.85rem;
     color: #7a7a75;
     text-align: center;
@@ -210,6 +217,7 @@
     width: 36px;
     height: 36px;
     color: white;
+    font-family: 'Aesop';
     font-size: 1.25rem;
     cursor: pointer;
     line-height: 0;
@@ -232,6 +240,7 @@
     border-radius: var(--radius);
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     padding: 1rem 1.5rem;
+    font-family: 'Aesop';
     font-size: 0.9rem;
     color: var(--text-color);
     display: none;
@@ -239,6 +248,7 @@
   }
 
   #settingsPanel label {
+    font-family: 'Aesop';
     font-weight: 600;
     margin-bottom: 0.25rem;
     display: block;
