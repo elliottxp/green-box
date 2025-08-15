@@ -1,62 +1,82 @@
 <!-- Site build date: {{ "now" | date: "%FT%T%z" }} -->
 <head>
+  <!-- Meta tags first -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Begin SEO -->
-  {% seo %}
-  <!-- End SEO -->
+  <!-- Load Aesop font -->
+  <style>
+    @font-face {
+      font-family: 'Aesop';
+      src: url('Font%20Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
+    /* Apply Aesop to all relevant elements */
+    body, h1, h2, h3, h4, h5, h6, p, a, label, button, input, textarea, select, option, li {
+      font-family: 'Aesop', serif !important;
+    }
+
+    /* Unify font-weight for headings and body */
+    body, p, li, a, label, button, input, textarea {
+      font-weight: 400;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600; /* keep headings slightly bolder */
+    }
+
+    /* Prevent external CSS box-model issues */
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+
+  <!-- SEO -->
+  {% seo %}
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   <link rel="stylesheet" type="text/css" href="{{ "/css/override.css" | relative_url }}">
 
   {% feed_meta %}
 
+  <!-- Google Analytics -->
   {% if jekyll.environment == 'production' and site.google_analytics -%}
-  <!-- Begin Google Analytics -->
-  {% include google-analytics.html %}
-  <!-- End Google Analytics -->
+    {% include google-analytics.html %}
   {%- endif %}
 
-  <!-- Begin highlight.js support -->
+  <!-- Highlight.js support -->
   <link rel="stylesheet" href="{{ "/js/highlightjs/styles/github.css" | relative_url }}">
-  <link rel="stylesheet" href="{{ "/js/highlightjs/styles/ssms.css" | relative_url }}" />
+  <link rel="stylesheet" href="{{ "/js/highlightjs/styles/ssms.css" | relative_url }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-  <script type="text/javascript" src="{{ "/js/highlightjs/highlight.min.js" | relative_url }}"></script>
+  <script src="{{ "/js/highlightjs/highlight.min.js" | relative_url }}"></script>
+  <script src="{{ "/js/highlightjs/languages/plaintext.min.js" | relative_url }}"></script>
+  <script src="{{ "/js/highlightjs/languages/powershell.min.js" | relative_url }}"></script>
+  <script src="{{ "/js/highlightjs/languages/tsql.min.js" | relative_url }}"></script>
+  <script>hljs.highlightAll();</script>
 
-  <!-- epub reader dependencies -->
+  <!-- Epub reader dependencies -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
 
-  <script type="text/javascript" src="{{ "/js/highlightjs/languages/plaintext.min.js" | relative_url }}"></script>
-  <script type="text/javascript" src="{{ "/js/highlightjs/languages/powershell.min.js" | relative_url }}"></script>
-  <script type="text/javascript" src="{{ "/js/highlightjs/languages/tsql.min.js" | relative_url }}"></script>
-
-  <script type="text/javascript"> hljs.highlightAll(); </script>
-  <!-- end highlight.js support -->
-
+  <!-- DarkReader support (production only) -->
   {% if jekyll.environment == 'production' -%}
-  <!-- dark theme using DarkReader -->
-  <script src="//unpkg.com/darkreader@4.9.40/darkreader.js"></script>
-  <script type="text/javascript">
-    DarkReader.setFetchMethod(window.fetch); // Fix to remedy CORS errors in chrome console
-    //DarkReader.enable();
-    DarkReader.auto( {brightness: 100, contrast: 90, sepia: 10} );
-  </script>
+    <script src="//unpkg.com/darkreader@4.9.40/darkreader.js"></script>
+    <script>
+      DarkReader.setFetchMethod(window.fetch); // Fix CORS issues
+      DarkReader.auto({ brightness: 100, contrast: 90, sepia: 10 });
+    </script>
   {%- endif %}
 
-   <!-- Favicon links -->
+  <!-- Favicons -->
   <link rel="icon" href="{{ "/img/favicon.ico" | relative_url }}" sizes="any" type="image/x-icon">
-  <link rel="icon" href="{{ "/img/favicon-16x16.png" | relative_url }}" type="image/png" size="16x16">
-  <link rel="icon" href="{{ "/img/favicon-32x32.png" | relative_url }}" type="image/png">
+  <link rel="icon" href="{{ "/img/favicon-16x16.png" | relative_url }}" type="image/png" sizes="16x16">
+  <link rel="icon" href="{{ "/img/favicon-32x32.png" | relative_url }}" type="image/png" sizes="32x32">
   <link rel="icon" href="{{ "/img/favicon.svg" | relative_url }}" type="image/svg+xml">
-  <link rel="icon" href="{{ "/img/favicon.ico?v=M44lzPylqQ" | relative_url }}">
-  <link rel="mask-icon" href="{{ base_path }}/images/safari-pinned-tab.svg?v=M44lzPylqQ" 
-  color="#000000">
+  <link rel="mask-icon" href="{{ base_path }}/images/safari-pinned-tab.svg?v=M44lzPylqQ" color="#000000">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/apple-touch-icon.png?v=M44lzPylqQ">
-  <link rel="icon" href="img/favicon-16x16.png" sizes="48x48"> 
-  <link rel="icon" href="{{ "img/favicon.svg" | relative_url }}" sizes="any">
-
 </head>
