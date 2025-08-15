@@ -37,8 +37,7 @@
     margin: 0;
     padding: 2rem;
     display: flex;
-    justify-content: center;
-    align-items: center; /* vertical centering */
+    justify-content: center; /* horizontal centering only */
     min-height: 100vh;
   }
 
@@ -49,7 +48,7 @@
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-    margin: 0 auto; /* ensure horizontal centering */
+    margin: 0 auto; /* ensures horizontal center */
   }
 
   h1 {
@@ -82,7 +81,7 @@
     font-size: 1rem;
     margin-bottom: 1rem;
     transition: border-color var(--transition), box-shadow var(--transition);
-    box-sizing: border-box; /* prevent overflow */
+    box-sizing: border-box; /* prevents overflow */
   }
 
   input[type="text"]:focus {
