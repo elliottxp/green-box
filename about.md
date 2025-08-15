@@ -1,7 +1,7 @@
 ---
 layout: default
 description: "plan for kindness"
-title: "about - green-box"
+title: "about"
 permalink: /about/
 order: 2
 ---
