@@ -48,7 +48,33 @@
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-    margin: 0 auto; /* ensures horizontal center */
+    margin: 0 auto; /* horizontal center */
+    position: relative; /* needed for settings button */
+  }
+
+  /* Settings button in top-right corner of container */
+  #settingsToggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    color: white;
+    font-family: 'Aesop';
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: background-color var(--transition);
+  }
+  #settingsToggle:hover {
+    background-color: #4b6f56;
   }
 
   h1 {
@@ -56,6 +82,11 @@
     font-weight: 600;
     font-size: 2rem;
     margin-bottom: 0.75rem;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
   }
 
   .fact {
@@ -63,6 +94,7 @@
     color: var(--accent-color);
     margin-bottom: 1.5rem;
     line-height: 1.4;
+    text-align: center;
   }
 
   label {
@@ -198,31 +230,6 @@
     text-align: center;
   }
 
-  /* Settings panel */
-  #settingsToggle {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    color: white;
-    font-family: 'Aesop';
-    font-size: 1.25rem;
-    cursor: pointer;
-    line-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: background-color var(--transition);
-  }
-  #settingsToggle:hover {
-    background-color: #4b6f56;
-  }
-
   #settingsPanel {
     position: absolute;
     top: 3.5rem;
@@ -289,11 +296,11 @@
 
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
-<h1 style="text-align:center;">green-box</h1>
-  <h2 style="text-align:center;">Plan for Kindness</h2>
-<p class="fact" style="text-align:center;">
+  <h1>green-box</h1>
+  <h2>Plan for Kindness</h2>
+  <p class="fact">
     Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
-</p>
+  </p>
 
   <label for="ideaInput">Submit your idea:</label>
   <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />

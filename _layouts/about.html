@@ -21,16 +21,16 @@ order: 2
     font-style: normal;
   }
 
+  *, *::before, *::after {
+    box-sizing: border-box; /* prevent overflow */
+  }
+
   :root {
     --bg-color: #f9f9f9;
     --text-color: #2c2c2c;
     --accent-color: #5a7f65;
     --border-color: #e0e0e0;
-    --danger-bg: #fdeaea;
-    --danger-border: #f5c6cb;
-    --danger-text: #a94442;
     --radius: 14px;
-    --transition: 0.25s ease;
   }
 
   body {
@@ -40,17 +40,19 @@ order: 2
     margin: 0;
     padding: 2rem;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* center horizontally */
     min-height: 100vh;
   }
 
   .about-container {
     background: #fff;
     border-radius: var(--radius);
-    padding: 2rem 2.5rem;
+    padding: 2rem;
     max-width: 480px;
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    margin: 0 auto; /* horizontal center */
+    position: relative; /* for future absolute elements like settings button */
   }
 
   h1 {
@@ -59,6 +61,7 @@ order: 2
     font-size: 2rem;
     margin-bottom: 1rem;
     color: var(--accent-color);
+    text-align: center;
   }
 
   h2 {
@@ -95,7 +98,7 @@ order: 2
       padding: 1rem;
     }
     .about-container {
-      padding: 1.5rem 1.25rem;
+      padding: 1.5rem;
       border-radius: 0;
       box-shadow: none;
       min-height: 100vh;
