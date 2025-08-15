@@ -5,12 +5,11 @@ title: "about - green-box"
 permalink: /about/
 order: 2
 ---
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>about - green-box</title>
+<title>about</title>
 
 <!-- Load custom font -->
 <style>
@@ -21,8 +20,9 @@ order: 2
     font-style: normal;
   }
 
+  /* Prevent input overhang */
   *, *::before, *::after {
-    box-sizing: border-box; /* prevent overflow */
+    box-sizing: border-box;
   }
 
   :root {
@@ -30,7 +30,11 @@ order: 2
     --text-color: #2c2c2c;
     --accent-color: #5a7f65;
     --border-color: #e0e0e0;
+    --danger-bg: #fdeaea;
+    --danger-border: #f5c6cb;
+    --danger-text: #a94442;
     --radius: 14px;
+    --transition: 0.25s ease;
   }
 
   body {
@@ -40,7 +44,7 @@ order: 2
     margin: 0;
     padding: 2rem;
     display: flex;
-    justify-content: center; /* center horizontally */
+    justify-content: center; /* horizontal centering only */
     min-height: 100vh;
   }
 
@@ -52,36 +56,32 @@ order: 2
     width: 100%;
     box-shadow: 0 8px 24px rgba(0,0,0,0.05);
     margin: 0 auto; /* horizontal center */
-    position: relative; /* for future absolute elements like settings button */
+    position: relative; /* needed for settings button */
   }
 
   h1 {
     font-family: 'Aesop';
     font-weight: 600;
     font-size: 2rem;
-    margin-bottom: 1rem;
-    color: var(--accent-color);
+    margin-bottom: 0.75rem;
     text-align: center;
   }
 
   h2 {
-    font-family: 'Aesop';
-    font-weight: 600;
-    font-size: 1.3rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--accent-color);
+    text-align: center;
   }
 
   p {
     line-height: 1.5;
     margin-bottom: 1rem;
+    font-family: 'Aesop';
     font-size: 1rem;
   }
 
   a {
     color: var(--accent-color);
     text-decoration: none;
+    font-family: 'Aesop';
     font-weight: 600;
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s ease;
