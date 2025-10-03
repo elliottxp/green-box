@@ -357,6 +357,7 @@
     "Read books at the cafe",
     "Play tennis",
     "Go ice skating",
+    "Learn about Transcendental Meditation",
     "Take photos of things outdoors",
     "Go for a walk around the block",
     "Go for a swim at the pool, have salt & vinegar chips as a reward",
