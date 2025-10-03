@@ -722,7 +722,7 @@
     if (!idea) return;
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'Wellbeing Idea', text: idea });
+        await navigator.share({ title: 'Wellbeing Idea', ("Want to do a this with me?"), text: idea });
       } catch (err) {
         alert('Sharing cancelled, but thats okay :)');
       }
