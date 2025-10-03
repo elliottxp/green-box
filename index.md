@@ -550,29 +550,37 @@
   suggestIdeaBtn.addEventListener('click', () => {
   // Add shake effect
   suggestIdeaBtn.classList.add('shake');
+
+  // Hide idea while shaking
+  ideaDisplay.textContent = '';
+  ideaDisplay.classList.remove('show');
+  ideaActions.style.display = 'none';
+
+  // After 2s (when shaking finishes), show the idea
   setTimeout(() => {
     suggestIdeaBtn.classList.remove('shake');
-  }, 2000); // remove after 2s
 
-  // Existing logic for picking ideas
-  const allIdeas = [...userIdeas];
-  if (showDefaults) allIdeas.push(...activeDefaultIdeas);
+    const allIdeas = [...userIdeas];
+    if (showDefaults) allIdeas.push(...activeDefaultIdeas);
 
-  if (allIdeas.length === 0) {
-    ideaDisplay.textContent = "No ideas available. Please add some!";
-    ideaActions.style.display = 'none';
-    return;
-  }
-  const randomIndex = Math.floor(Math.random() * allIdeas.length);
-  const idea = allIdeas[randomIndex];
-  ideaDisplay.textContent = idea;
-  ideaDisplay.classList.remove('show');
-  void ideaDisplay.offsetWidth; // restart animation
-  ideaDisplay.classList.add('show');
-  ideaActions.style.display = 'flex';
-  addToCalendarBtn.dataset.idea = idea;
-  shareIdeaBtn.dataset.idea = idea;
+    if (allIdeas.length === 0) {
+      ideaDisplay.textContent = "No ideas available. Please add some!";
+      return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * allIdeas.length);
+    const idea = allIdeas[randomIndex];
+
+    ideaDisplay.textContent = idea;
+    ideaDisplay.classList.remove('show');
+    void ideaDisplay.offsetWidth; // restart animation
+    ideaDisplay.classList.add('show');
+    ideaActions.style.display = 'flex';
+    addToCalendarBtn.dataset.idea = idea;
+    shareIdeaBtn.dataset.idea = idea;
+  }, 2000); // wait until shaking ends
 });
+
 
 
   // Helper: convert Date -> ICS friendly string (YYYYMMDDTHHMMSSZ)
