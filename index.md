@@ -359,8 +359,8 @@
     Did you know? The average person spends around 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add some differnt moments to your day.
   </p>
 
-  <label for="ideaInput">Submit your idea:</label>
-  <input type="text" id="ideaInput" placeholder="e.g. Take a 10-minute walk" />
+  <label for="ideaInput">Submit your idea to box:</label>
+  <input type="text" id="ideaInput" placeholder="e.g. Take a 10 minute walk" />
   <button id="addIdeaBtn" class="btn-primary">Add to box</button>
 
   <div class="actions">
@@ -724,13 +724,13 @@
       try {
         await navigator.share({ title: 'Wellbeing Idea', text: idea });
       } catch (err) {
-        alert('Sharing cancelled or not supported.');
+        alert('Sharing cancelled, but thats okay :)');
       }
     } else {
       navigator.clipboard.writeText(idea).then(() => {
         alert('Idea copied to clipboard!');
       }, () => {
-        alert('Failed to copy idea.');
+        alert('Failed to copy idea, try again.');
       });
     }
   });
