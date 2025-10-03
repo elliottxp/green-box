@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -8,7 +9,7 @@
 <style>
   @font-face {
     font-family: 'Aesop';
-    src: url('Font%20Regular.ttf') format('truetype'); /* URL-encoded space */
+    src: url('Font%20Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -104,7 +105,7 @@
     margin-bottom: 0.5rem;
   }
 
-  input[type="text"] {
+  input[type="text"], input[type="datetime-local"], select {
     width: 100%;
     padding: 0.6rem 1rem;
     border: 1px solid var(--border-color);
@@ -116,7 +117,7 @@
     box-sizing: border-box; /* prevents overflow */
   }
 
-  input[type="text"]:focus {
+  input[type="text"]:focus, input[type="datetime-local"]:focus, select:focus {
     outline: none;
     border-color: var(--accent-color);
     box-shadow: 0 0 0 3px rgba(90,127,101,0.15);
@@ -269,6 +270,48 @@
     background-color: #4b6f56;
   }
 
+  /* Modal (Add to calendar) styles */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  .modal-overlay.show {
+    display: flex;
+  }
+
+  .modal {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  }
+
+  .modal h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+  }
+
+  .modal .modal-actions {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+  }
+
+  .modal .small {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
   @media (max-width: 500px) {
     body {
       padding: 1rem;
@@ -286,6 +329,9 @@
       width: 90vw;
       right: 5vw;
       top: 3.5rem;
+    }
+    .modal {
+      max-width: 100%;
     }
   }
 </style>
@@ -341,8 +387,37 @@
   </div>
 </div>
 
+<!-- Modal: edit event before creating ICS -->
+<div class="modal-overlay" id="eventModalOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h3 id="modalTitle">Create calendar event</h3>
+
+    <label for="eventTitleInput">Event title</label>
+    <input id="eventTitleInput" type="text" />
+
+    <label for="eventDateTimeInput">Date & time</label>
+    <input id="eventDateTimeInput" type="datetime-local" />
+
+    <label for="eventDuration">Duration</label>
+    <select id="eventDuration" aria-label="Event duration">
+      <option value="15">15 minutes</option>
+      <option value="30" selected>30 minutes</option>
+      <option value="45">45 minutes</option>
+      <option value="60">1 hour</option>
+      <option value="90">1 hour 30</option>
+    </select>
+
+    <div class="small" id="modalNote">Adjust date/time and duration, then press <strong>Create event</strong>.</div>
+
+    <div class="modal-actions">
+      <button id="cancelEventBtn" class="btn-secondary">Cancel</button>
+      <button id="createEventBtn" class="btn-primary">Create event</button>
+    </div>
+  </div>
+</div>
+
 <script>
-    const defaultIdeas = [
+  const defaultIdeas = [
     "Go and try a new cafe",
     "Do some art",
     "Play basketball",
@@ -393,6 +468,16 @@
   const settingsPanel = document.getElementById('settingsPanel');
   const toggleDefaultsCheckbox = document.getElementById('toggleDefaults');
   const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
+
+  // Modal elements
+  const eventModalOverlay = document.getElementById('eventModalOverlay');
+  const eventTitleInput = document.getElementById('eventTitleInput');
+  const eventDateTimeInput = document.getElementById('eventDateTimeInput');
+  const eventDuration = document.getElementById('eventDuration');
+  const createEventBtn = document.getElementById('createEventBtn');
+  const cancelEventBtn = document.getElementById('cancelEventBtn');
+
+  let lastFocusedElementBeforeModal = null;
 
   function updateIdeaLists() {
     userIdeasUl.innerHTML = '';
@@ -471,25 +556,119 @@
     shareIdeaBtn.dataset.idea = idea;
   });
 
+  // Helper: convert Date -> ICS friendly string (YYYYMMDDTHHMMSSZ)
+  function formatDateForICS(d) {
+    // use toISOString and remove dashes/colons/milliseconds (preserves trailing Z)
+    return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+  }
+
+  // Helper: convert Date -> local datetime-local input value (YYYY-MM-DDTHH:MM)
+  function formatForDatetimeLocal(d) {
+    const pad = (n) => String(n).padStart(2, '0');
+    const year = d.getFullYear();
+    const month = pad(d.getMonth() + 1);
+    const day = pad(d.getDate());
+    const hours = pad(d.getHours());
+    const minutes = pad(d.getMinutes());
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
+  // Open modal and prefill fields
+  function openEventModal(defaultTitle) {
+    lastFocusedElementBeforeModal = document.activeElement;
+
+    // Prefill title with idea if given
+    eventTitleInput.value = defaultTitle || '';
+
+    // Prefill date/time to 1 hour from now by default
+    const defaultStart = new Date(Date.now() + 60 * 60 * 1000);
+    eventDateTimeInput.value = formatForDatetimeLocal(defaultStart);
+
+    // default duration 30
+    eventDuration.value = '30';
+
+    eventModalOverlay.classList.add('show');
+    eventModalOverlay.setAttribute('aria-hidden', 'false');
+    // focus the date input so user can adjust quickly
+    setTimeout(() => eventDateTimeInput.focus(), 50);
+  }
+
+  function closeEventModal() {
+    eventModalOverlay.classList.remove('show');
+    eventModalOverlay.setAttribute('aria-hidden', 'true');
+    // restore focus
+    if (lastFocusedElementBeforeModal && typeof lastFocusedElementBeforeModal.focus === 'function') {
+      lastFocusedElementBeforeModal.focus();
+    }
+  }
+
+  // The Add-to-calendar button now opens the modal where user can edit date/time
   addToCalendarBtn.addEventListener('click', () => {
     const idea = addToCalendarBtn.dataset.idea;
     if (!idea) return;
-    const now = new Date();
-    const start = new Date(now.getTime() + 60 * 60 * 1000);
-    const end = new Date(start.getTime() + 30 * 60 * 1000);
-    function formatDate(d) {
-      return d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+    openEventModal(idea);
+  });
+
+  // Cancel button closes modal
+  cancelEventBtn.addEventListener('click', () => {
+    closeEventModal();
+  });
+
+  // Close modal when clicking overlay outside the modal box
+  eventModalOverlay.addEventListener('click', (e) => {
+    if (e.target === eventModalOverlay) {
+      closeEventModal();
     }
-    const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:${idea}
-DTSTART:${formatDate(start)}
-DTEND:${formatDate(end)}
-DESCRIPTION:${idea}
-END:VEVENT
-END:VCALENDAR`;
-    const blob = new Blob([icsContent], {type: 'text/calendar'});
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && eventModalOverlay.classList.contains('show')) {
+      closeEventModal();
+    }
+  });
+
+  // Create ICS and download when user confirms
+  createEventBtn.addEventListener('click', () => {
+    const title = (eventTitleInput.value || addToCalendarBtn.dataset.idea || 'Wellbeing idea').trim();
+    const dtValue = eventDateTimeInput.value;
+    const durationMin = parseInt(eventDuration.value, 10) || 30;
+
+    if (!dtValue) {
+      alert('Please choose a date and time for the event.');
+      return;
+    }
+
+    // Parse local datetime-local input into a Date
+    const start = new Date(dtValue);
+    if (isNaN(start.getTime())) {
+      alert('Invalid date/time — please adjust and try again.');
+      return;
+    }
+
+    const now = new Date();
+    if (start.getTime() < now.getTime() - 1000 * 60) {
+      // allow slight clock skew but warn on past times
+      if (!confirm('The date/time you selected is in the past. Create event anyway?')) {
+        return;
+      }
+    }
+
+    const end = new Date(start.getTime() + durationMin * 60 * 1000);
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      `SUMMARY:${escapeICS(title)}`,
+      `DTSTART:${formatDateForICS(start)}`,
+      `DTEND:${formatDateForICS(end)}`,
+      `DESCRIPTION:${escapeICS(title)}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -498,7 +677,18 @@ END:VCALENDAR`;
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+
+    closeEventModal();
   });
+
+  // Basic escaping for ICS text lines (commas, semicolons, newlines)
+  function escapeICS(text) {
+    return String(text)
+      .replace(/\\/g, '\\\\')
+      .replace(/\n/g, '\\n')
+      .replace(/,/g, '\\,')
+      .replace(/;/g, '\\;');
+  }
 
   shareIdeaBtn.addEventListener('click', async () => {
     const idea = shareIdeaBtn.dataset.idea;
