@@ -299,7 +299,7 @@
   <h1>green-box</h1>
   <h2>Plan for Kindness</h2>
   <p class="fact">
-    Did you know? The average person spends over 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
+    Did you know? The average person spends around 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add more meaningful, healthy moments to your day.
   </p>
 
   <label for="ideaInput">Submit your idea:</label>
@@ -350,7 +350,7 @@
     "Drive somewhere 1 hour away",
     "Meditate for 5 minutes",
     "Play a board game",
-    "Go get an icey creamy",
+    "Go get an ice creamy",
     "Eat pizza and watch the sunset",
     "Go to botanical gardens or arboretum",
     "Go bowling",
@@ -359,9 +359,9 @@
     "Go ice skating",
     "Take photos of things outdoors",
     "Go for a walk around the block",
-    "Go for a swim at the pool, salt & vinegar chips as a reward",
+    "Go for a swim at the pool, have salt & vinegar chips as a reward",
     "Cook some muffins",
-    "Go to the Art Gallery",
+    "Go to the art gallery",
     "Pick again to add suspense",
     "Cook something new",
     "Go for a bike ride",
