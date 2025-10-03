@@ -299,7 +299,7 @@
   <h1>green-box</h1>
   <h2>Plan for Kindness</h2>
   <p class="fact">
-    Did you know? The average person spends around 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add some nice moments to your day.
+    Did you know? The average person spends around 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add some differnt moments to your day.
   </p>
 
   <label for="ideaInput">Submit your idea:</label>
