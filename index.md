@@ -333,6 +333,18 @@
       max-width: 100%;
     }
   }
+
+  /* Shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+
+.shake {
+  animation: shake 0.5s;
+  animation-iteration-count: 4; /* 0.5s * 4 = 2 seconds */
+}
 </style>
 </head>
 
@@ -536,24 +548,32 @@
   });
 
   suggestIdeaBtn.addEventListener('click', () => {
-    const allIdeas = [...userIdeas];
-    if (showDefaults) allIdeas.push(...activeDefaultIdeas);
+  // Add shake effect
+  suggestIdeaBtn.classList.add('shake');
+  setTimeout(() => {
+    suggestIdeaBtn.classList.remove('shake');
+  }, 2000); // remove after 2s
 
-    if (allIdeas.length === 0) {
-      ideaDisplay.textContent = "No ideas available. Please add some!";
-      ideaActions.style.display = 'none';
-      return;
-    }
-    const randomIndex = Math.floor(Math.random() * allIdeas.length);
-    const idea = allIdeas[randomIndex];
-    ideaDisplay.textContent = idea;
-    ideaDisplay.classList.remove('show');
-    void ideaDisplay.offsetWidth; // restart animation
-    ideaDisplay.classList.add('show');
-    ideaActions.style.display = 'flex';
-    addToCalendarBtn.dataset.idea = idea;
-    shareIdeaBtn.dataset.idea = idea;
-  });
+  // Existing logic for picking ideas
+  const allIdeas = [...userIdeas];
+  if (showDefaults) allIdeas.push(...activeDefaultIdeas);
+
+  if (allIdeas.length === 0) {
+    ideaDisplay.textContent = "No ideas available. Please add some!";
+    ideaActions.style.display = 'none';
+    return;
+  }
+  const randomIndex = Math.floor(Math.random() * allIdeas.length);
+  const idea = allIdeas[randomIndex];
+  ideaDisplay.textContent = idea;
+  ideaDisplay.classList.remove('show');
+  void ideaDisplay.offsetWidth; // restart animation
+  ideaDisplay.classList.add('show');
+  ideaActions.style.display = 'flex';
+  addToCalendarBtn.dataset.idea = idea;
+  shareIdeaBtn.dataset.idea = idea;
+});
+
 
   // Helper: convert Date -> ICS friendly string (YYYYMMDDTHHMMSSZ)
   function formatDateForICS(d) {
