@@ -354,12 +354,12 @@
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
   <h1>green-box</h1>
-  <h3>plan your time</h3>
+  <h2>plan your time</h2>
   <p class="fact">
-    Let’s add some differnt moments to your day.
+    let’s add some differnt moments to your day.
   </p>
 
-  <label for="ideaInput">Submit your idea to box:</label>
+  <label for="ideaInput">Place an idea in the box:</label>
   <input type="text" id="ideaInput" placeholder="e.g. Take a 10 minute walk" />
   <button id="addIdeaBtn" class="btn-primary">Add to box</button>
 
