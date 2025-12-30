@@ -354,7 +354,7 @@
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
   <h1>green-box</h1>
-  <h2>Plan Your Time</h2>
+  <h3>plan your time</h3>
   <p class="fact">
     Let’s add some differnt moments to your day.
   </p>
