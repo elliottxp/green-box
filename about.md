@@ -1,6 +1,6 @@
 ---
 layout: default
-description: "plan for kindness"
+description: "plan your day"
 title: "about"
 permalink: /about/
 order: 2
