@@ -354,9 +354,9 @@
   <button id="settingsToggle" aria-expanded="false" aria-controls="settingsPanel" aria-label="Open settings">&#9881;</button>
 
   <h1>green-box</h1>
-  <h2>Plan for Kindness</h2>
+  <h2>Plan Your Time</h2>
   <p class="fact">
-    Did you know? The average person spends around 3 hours a day on their phone and 5 hours indoors, often sitting inactive. Let’s add some differnt moments to your day.
+    Let’s add some differnt moments to your day.
   </p>
 
   <label for="ideaInput">Submit your idea to box:</label>
