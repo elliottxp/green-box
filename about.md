@@ -1,6 +1,6 @@
 ---
 layout: default
-description: "plan your day"
+description: "plan your time"
 title: "about"
 permalink: /about/
 order: 2
