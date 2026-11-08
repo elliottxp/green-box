@@ -456,6 +456,11 @@
     "Go get Fish and Chips",
     "Hike on the mountain",
     "Listen to some music",
+    "Go to Deep Space Centre",
+    "Play playstation games together",
+    "Book a zoo experience",
+    "Go to UNDER",
+    
     "Have a picnic"
   ];
 
